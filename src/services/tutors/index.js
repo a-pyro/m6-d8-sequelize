@@ -1,5 +1,5 @@
 const express = require('express');
-const { Tutor, Class } = require('../../db');
+const { Tutor, Class, Module } = require('../../db');
 
 const router = express.Router();
 
@@ -7,7 +7,14 @@ router
   .route('/')
   .get(async (req, res, next) => {
     try {
-      const data = await Tutor.findAll();
+      const data = await Tutor.findAll({
+        where: {},
+        include: {
+          model: Class,
+          include: { model: Module },
+          attributes: { exclude: ['moduleId', 'tutorId'] },
+        },
+      });
       res.status(200).send(data);
     } catch (e) {
       console.log(e);

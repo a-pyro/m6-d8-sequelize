@@ -1,21 +1,21 @@
-const express = require("express");
-const Module = require("../../db").Module;
-const Class = require("../../db").Class;
-const Student = require("../../db").Student;
-const { Op, Sequelize } = require("sequelize");
+const express = require('express');
+const Module = require('../../db').Module;
+const Class = require('../../db').Class;
+const Student = require('../../db').Student;
+const { Op, Sequelize } = require('sequelize');
 const router = express.Router();
 
 router
-  .route("/")
+  .route('/')
   .get(async (req, res, next) => {
     try {
       const data = await Module.findAll({
         where: {
           [Op.or]: [
-            { name: { [Op.iLike]: "%" + req.query.name + "%" } },
+            { name: { [Op.iLike]: '%' + req.query.name + '%' } },
             {
               classes: Sequelize.where(Sequelize.col(`"classes".topic`), {
-                [Op.iLike]: "%" + req.query.className + "%",
+                [Op.iLike]: '%' + req.query.className + '%',
               }),
               // {
               //   where: {
@@ -52,7 +52,7 @@ router
   });
 
 router
-  .route("/:id")
+  .route('/:id')
   .get(async (req, res, next) => {
     try {
       const data = await Module.findByPk(req.params.id);
@@ -78,9 +78,9 @@ router
       const data = await Module.destroy({ where: { id: req.params.id } });
       console.log(data);
       if (data > 0) {
-        res.send("ok");
+        res.send('ok');
       } else {
-        res.status(404).send("not found");
+        res.status(404).send('not found');
       }
     } catch (e) {
       console.log(e);
