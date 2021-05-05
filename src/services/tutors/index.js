@@ -1,9 +1,10 @@
-const express = require("express");
+const express = require('express');
+const { Tutor } = require('../../db');
 
 const router = express.Router();
 
 router
-  .route("/")
+  .route('/')
   .get(async (req, res, next) => {
     try {
     } catch (e) {
@@ -12,13 +13,16 @@ router
   })
   .post(async (req, res, next) => {
     try {
+      const data = await Tutor.create(req.body);
+      console.log(data);
+      res.status(200).send(data);
     } catch (e) {
       console.log(e);
     }
   });
 
 router
-  .route("/:id")
+  .route('/:id')
   .get(async (req, res, next) => {
     try {
     } catch (e) {

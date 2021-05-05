@@ -1,9 +1,9 @@
-const express = require("express");
-const Student = require("../../db").Student;
+const express = require('express');
+const Student = require('../../db').Student;
 const router = express.Router();
 
 router
-  .route("/")
+  .route('/')
   .get(async (req, res, next) => {
     try {
     } catch (e) {
@@ -13,15 +13,14 @@ router
   .post(async (req, res, next) => {
     try {
       const data = await Student.bulkCreate([
-        { name: "Gentrit", lastname: "Begaj" },
-        { name: "Luca", lastname: "Perullo" },
+        { name: 'Gentrit', lastname: 'Begaj' },
       ]);
       res.send(data);
     } catch (e) {
       console.log(e);
     }
   });
-router.route("/:studentId/classes/:classId").post(async (req, res, next) => {
+router.route('/:studentId/classes/:classId').post(async (req, res, next) => {
   try {
     const student = await Student.findByPk(req.params.studentId);
     const result = await student.addClass(req.params.classId);
@@ -31,7 +30,7 @@ router.route("/:studentId/classes/:classId").post(async (req, res, next) => {
   }
 });
 router
-  .route("/:id")
+  .route('/:id')
   .get(async (req, res, next) => {
     try {
     } catch (e) {
